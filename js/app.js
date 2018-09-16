@@ -50,8 +50,7 @@ var Player = function(x, y){
 
 // This class requires an update(), render() and
 Player.prototype.update = function (dt) {
-    // playerX = this.x;
-    // playerY = this.y;
+    
 };
 Player.prototype.render = function () {
     ctx.drawImage(Resources.get(this.player), this.x, this.y);
@@ -76,7 +75,7 @@ Player.prototype.handleInput = function (keyPress) {
     };
   
     if (this.y < 0) {
-        setTimeout(function () {
+        setTimeout(() => {
             this.x = 202;
             this.y = 405;
         }, 600);
@@ -110,3 +109,13 @@ document.addEventListener('keyup', function(e) {
 
     player.handleInput(allowedKeys[e.keyCode]);
 });
+
+// access the div with an #root
+const rootDiv = document.querySelector('#root');
+// create a new div .startGame
+const container = document.createElement('div');
+container.setAttribute('class', 'startGame');
+rootDiv.appendChild(container);
+
+
+
