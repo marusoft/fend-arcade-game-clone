@@ -13,36 +13,89 @@ var Enemy = function(x, y, speed) {
 
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
-Enemy.prototype.update = function(dt) {
+Enemy.prototype.update = function (dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
     this.x += this.speed * dt;
-
+    // enemies reappears randomly once off the canvas
     if (this.x > 510) {
         this.x = -50;
         this.speed = 100 + Math.floor(Math.random() * 222);
     }
-    if (player.x < this.x + 80 && player.x + 80 > this.x && player.y < this.y + 60 && 60 + player.y > this.y) {
+    // checks for collisions between the player and the enemies
+    if (player.x < this.x + 80 && 
+        player.x + 80 > this.x && 
+        player.y < this.y + 60 && 
+        60 + player.y > this.y) {
+
         player.x = 202;
-        player.y = 405
+        player.y = 405;
     }
 };
 
 // Draw the enemy on the screen, required method for game
-Enemy.prototype.render = function() {
+Enemy.prototype.render = function () {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
-// Now write your own player class
-// This class requires an update(), render() and
-// a handleInput() method.
+// player class on both x and y axis
+var Player = function(x, y){
+    // move along x and y axis
+    this.x = x;
+    this.y = y;
+    // image of the player
+    this.player = 'images/char-princess-girl.png';
+}
 
+// This class requires an update(), render() and
+Player.prototype.update = function (dt) {
+    // playerX = this.x;
+    // playerY = this.y;
+};
+Player.prototype.render = function () {
+    ctx.drawImage(Resources.get(this.player), this.x, this.y);
+};
+// a handleInput() method.
+Player.prototype.handleInput = function (keyPress) {
+  
+    if (keyPress == 'left' && this.x > 0) {
+        this.x -= 102;
+    };
+
+    if (keyPress == 'right' && this.x < 405) {
+        this.x += 102;
+    };
+
+    if (keyPress == 'up' && this.y > 0) {
+        this.y -= 83;
+    };
+
+    if (keyPress == 'down' && this.y < 405) {
+        this.y += 83;
+    };
+  
+    if (this.y < 0) {
+        setTimeout(function () {
+            this.x = 202;
+            this.y = 405;
+        }, 600);
+
+    };
+};
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
+var allEnemies = [];
+var enemyLocation = [63, 147, 230];
 
+enemyLocation.forEach( function(locationY) {
+    enemy = new Enemy(0, locationY, 200);
+    allEnemies.push(enemy);
+});
+
+var player = new Player(202, 405);
 
 
 // This listens for key presses and sends the keys to your
