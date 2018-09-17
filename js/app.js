@@ -117,5 +117,27 @@ const container = document.createElement('div');
 container.setAttribute('class', 'startGame');
 rootDiv.appendChild(container);
 
+const h2 = document.createElement('h2');
+h2.textContent = 'How To Play Classic Arcade Game';
+const p = document.createElement('p');
+p.textContent = `Use Left, Right, Up and Down arrowkeys to move the player left,right,up and down postion, avoiding player collision with the bugs crossing the road.
+The challenge is to try to get to the water at the top of the road as much as possible and win the game`;
 
+const button = document.createElement('button');
+button.setAttribute('id', 'buttonId');
+button.textContent = `Start the Adventure`;
+
+container.appendChild(h2);
+container.appendChild(p);
+container.appendChild(button);
+
+const buttonClick = document.querySelector('#buttonId');
+console.log(buttonClick);
+
+
+const startAdventure = () => {
+    rootDiv.classList.add("hide");
+}
+
+buttonClick.addEventListener('click', startAdventure);
 
