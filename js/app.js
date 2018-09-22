@@ -47,19 +47,18 @@ Enemy.prototype.update = function (dt) {
         player.y < this.y + 60 && 
         60 + player.y > this.y) {
 
-        player.reset();;
+        player.reset();
         availableLives.pop();
         playerLives -= 1;
 
         if (playerScore >= 50) {
             playerScore -= 50;
         }
-        lifeLine();
 
         player.x = 202;
         player.y = 405;
     }
-    
+    lifeLine();
 };
 
 // Draw the enemy on the screen, required method for game
@@ -74,12 +73,17 @@ var Player = function(x, y){
     this.y = y;
     // image of the player
     this.player = 'images/char-princess-girl.png';
-}
+};
+var playerX;
+var playerY;
 
 // This class requires an update(), render() and
 Player.prototype.update = function (dt) {
-    
+    playerX = this.x;
+    playerY = this.y;
+
 };
+
 Player.prototype.render = function () {
     ctx.drawImage(Resources.get(this.player), this.x, this.y);
 };
@@ -115,6 +119,11 @@ Player.prototype.handleInput = function (keyPress) {
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 
+// reset the player to original position on collision with the enemy
+Player.prototype.reset = function(){
+    this.x = 202;
+    this.y = 405;
+}
 
 // Lives class
 var Lives = function(x, y){
