@@ -19,6 +19,7 @@ The following are the dependencies that was used during the development of the A
 * Vanilla JavaScript with DOM manipulation
 * Google Fonts
 * [Udacity art assets and game engine](https://github.com/udacity/frontend-nanodegree-arcade-game)
+* [HTML5 Canvas](https://www.udacity.com/course/ud292)
 * MDN Documentation
 * Background Image from [pexels](https://www.pexels.com/)
 * Youtube Hang-out Video Presented by Ryan Boris [Udacity FEND Webinar - Project #3 Walkthrough](https://www.youtube.com/watch?v=JcQYGbg0IkQ&feature=youtu.be)
