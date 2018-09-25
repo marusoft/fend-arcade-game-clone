@@ -1,30 +1,112 @@
-var playerPoints = 0;
-var playerLives = 3;
+let playerPoints = 0;
+let playerLives = 3;
 
+
+// start game function
 let startAdventure = () => { 
     rootDiv1.classList.add("hide");
     playerPoints = 0;
 }
+// reload page on win or lose
 let replay = () => {
     window.location.reload(true);
 }
-
+// end of game function
 let gameOver = () => {
     rootDiv2.classList.add("show");
 }
 
+// check available lives
 let lifeLine = () => {
     if(availableLives.length === 0) {
         gameOver();
     }
 }
-
+// victory display
 let victory = () => {
     rootDiv3.classList.add("show");
 }
 
+
+// access the div with an #root
+const rootDiv1 = document.querySelector('#root');
+//  Adventure Description modal
+// create a new div .startGame
+const container = document.createElement('div');
+container.setAttribute('class', 'startGame');
+rootDiv1.appendChild(container);
+
+const h2 = document.createElement('h2');
+h2.textContent = 'How To Play Classic Arcade Game';
+const p = document.createElement('p');
+p.textContent = `Use Left, Right, Up and Down arrowkeys to move the player left,right,up and down postion, avoiding player collision with the bugs crossing the road.
+The challenge is to try to get to the water at the top of the road as much as possible and win the game`;
+// create a button
+const button = document.createElement('button');
+// set id for button
+button.setAttribute('id', 'buttonId');
+button.textContent = `Start Adventure`;
+// append siblings to the container class
+container.appendChild(h2);
+container.appendChild(p);
+container.appendChild(button);
+
+const buttonClick1 = document.querySelector('#buttonId');
+// event listener
+buttonClick1.addEventListener('click', startAdventure);
+
+
+
+// gameOver modal
+const rootDiv2 = document.querySelector('#game')
+const gameOverContainer = document.createElement('div');
+gameOverContainer.setAttribute('class', 'gameOver');
+rootDiv2.appendChild(gameOverContainer);
+
+const h3 = document.createElement('h3');
+h3.textContent = 'End of game';
+const h4 = document.createElement('h4');
+h4.textContent = `You lost the game, Play another game`;
+const buttonGameOver = document.createElement('button');
+buttonGameOver.setAttribute('id', 'gameId');
+buttonGameOver.textContent = `Replay`;
+
+gameOverContainer.appendChild(h3);
+gameOverContainer.appendChild(h4);
+gameOverContainer.appendChild(buttonGameOver);
+
+// access the button
+const buttonClick2 = document.querySelector('#gameId');
+// event listener
+buttonClick2.addEventListener('click', replay);
+
+
+
+// victory modal
+const rootDiv3 = document.querySelector('#winGame')
+const gameWonContainer = document.createElement('div');
+gameWonContainer.setAttribute('class', 'gameWon');
+rootDiv3.appendChild(gameWonContainer);
+
+const h5 = document.createElement('h5');
+h5.textContent = 'Awesome';
+const h6 = document.createElement('h6');
+h6.textContent = `You are a Spartan`;
+const buttonGameWon = document.createElement('button');
+buttonGameWon.setAttribute('id', 'gameWonId');
+buttonGameWon.textContent = `Replay`;
+
+gameWonContainer.appendChild(h5);
+gameWonContainer.appendChild(h6);
+gameWonContainer.appendChild(buttonGameWon);
+
+const buttonClick3 = document.querySelector('#gameWonId');
+
+buttonClick3.addEventListener('click', replay);
+
+
 // Enemies class 
-var Enemy = function(x, y, speed = 1) {
+var Enemy = function(x, y, speed) {
     // Variables applied to each of our instances go here,
     this.x = x;
     this.y = y;
@@ -41,8 +123,7 @@ Enemy.prototype.update = function(dt) {
     this.x += 100 * this.speed * dt;
     
     // collison detection
-    if (parseInt(this.x)+ 100 >= playerX && parseInt(this.x) <= playerX + 40 && this.y === playerY){
-        console.log("a collision just occured your player diessss");  
+    if (parseInt(this.x)+ 100 >= playerX && parseInt(this.x) <= playerX + 40 && this.y === playerY){  
         player.reset();
         availableLives.pop();
         playerLives -= 1
@@ -140,7 +221,6 @@ Winblock.prototype.update = function(){
         player.reset();
     }
     if (allKeys.length == 5){
-        console.log("You win Game");
         victory();
     } 
 }
@@ -149,14 +229,14 @@ Winblock.prototype.update = function(){
 var Points = function(x, y, score){
     this.x = x;
     this.y = y;
-    this.score = "Your points: "+ playerPoints
+    this.score = "Game Point: "+ playerPoints
 }
 Points.prototype.render = function(){
     ctx.font = '20px serif';
     ctx.fillText(this.score, this.x, this.y);
 }
 Points.prototype.update = function(){
-    this.score = "Your points: "+ playerPoints
+    this.score = " Game Point: " + playerPoints
 }
 
 // possible X-axis positions on board
@@ -209,80 +289,3 @@ document.addEventListener('keyup', function(e) {
 
     player.handleInput(allowedKeys[e.keyCode]);
 });
-
-
-// access the div with an #root
-const rootDiv1 = document.querySelector('#root');
-//  Adventure Description modal
-// create a new div .startGame
-const container = document.createElement('div');
-container.setAttribute('class', 'startGame');
-rootDiv1.appendChild(container);
-
-const h2 = document.createElement('h2');
-h2.textContent = 'How To Play Classic Arcade Game';
-const p = document.createElement('p');
-p.textContent = `Use Left, Right, Up and Down arrowkeys to move the player left,right,up and down postion, avoiding player collision with the bugs crossing the road.
-The challenge is to try to get to the water at the top of the road as much as possible and win the game`;
-
-const button = document.createElement('button');
-// set id for 
-button.setAttribute('id', 'buttonId');
-button.textContent = `Start Adventure`;
-
-container.appendChild(h2);
-container.appendChild(p);
-container.appendChild(button);
-
-const buttonClick1 = document.querySelector('#buttonId');
-// event listener
-buttonClick1.addEventListener('click', startAdventure);
-
-
-
-// gameOver modal
-const rootDiv2 = document.querySelector('#game')
-const gameOverContainer = document.createElement('div');
-gameOverContainer.setAttribute('class', 'gameOver');
-rootDiv2.appendChild(gameOverContainer);
-
-const h3 = document.createElement('h3');
-h3.textContent = 'End of game';
-const h4 = document.createElement('h4');
-h4.textContent = `You lost the game, Play another game`;
-const buttonGameOver = document.createElement('button');
-buttonGameOver.setAttribute('id', 'gameId');
-buttonGameOver.textContent = `Replay`;
-
-gameOverContainer.appendChild(h3);
-gameOverContainer.appendChild(h4);
-gameOverContainer.appendChild(buttonGameOver);
-
-// access the button
-const buttonClick2 = document.querySelector('#gameId');
-// event listener
-buttonClick2.addEventListener('click', replay);
-
-
-
-// congratulation modal
-const rootDiv3 = document.querySelector('#winGame')
-const gameWonContainer = document.createElement('div');
-gameWonContainer.setAttribute('class', 'gameWon');
-rootDiv3.appendChild(gameWonContainer);
-
-const h5 = document.createElement('h5');
-h5.textContent = 'Awesome';
-const h6 = document.createElement('h6');
-h6.textContent = `You are a Spartan`;
-const buttonGameWon = document.createElement('button');
-buttonGameWon.setAttribute('id', 'gameWonId');
-buttonGameWon.textContent = `Replay`;
-
-gameWonContainer.appendChild(h5);
-gameWonContainer.appendChild(h6);
-gameWonContainer.appendChild(buttonGameWon);
-
-const buttonClick3 = document.querySelector('#gameWonId');
-
-buttonClick3.addEventListener('click', replay);
