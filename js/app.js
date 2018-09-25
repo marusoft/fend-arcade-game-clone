@@ -1,7 +1,6 @@
 let playerPoints = 0;
 let playerLives = 3;
 
-
 // start game function
 let startAdventure = () => { 
     rootDiv1.classList.add("hide");
@@ -26,7 +25,6 @@ let lifeLine = () => {
 let victory = () => {
     rootDiv3.classList.add("show");
 }
-
 
 // access the div with an #root
 const rootDiv1 = document.querySelector('#root');
@@ -55,8 +53,6 @@ const buttonClick1 = document.querySelector('#buttonId');
 // event listener
 buttonClick1.addEventListener('click', startAdventure);
 
-
-
 // gameOver modal
 const rootDiv2 = document.querySelector('#game')
 const gameOverContainer = document.createElement('div');
@@ -80,8 +76,6 @@ const buttonClick2 = document.querySelector('#gameId');
 // event listener
 buttonClick2.addEventListener('click', replay);
 
-
-
 // victory modal
 const rootDiv3 = document.querySelector('#winGame')
 const gameWonContainer = document.createElement('div');
@@ -103,7 +97,6 @@ gameWonContainer.appendChild(buttonGameWon);
 const buttonClick3 = document.querySelector('#gameWonId');
 
 buttonClick3.addEventListener('click', replay);
-
 
 // Enemies class 
 var Enemy = function(x, y, speed) {
