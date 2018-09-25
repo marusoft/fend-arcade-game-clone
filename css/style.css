@@ -50,7 +50,7 @@ p{
     visibility: hidden;
 }
 #winGame{
-    font-family: 'Alegreya', serif;
+    font-family: 'Merienda', serif;
     position: absolute;
     background-color: #0D4B9B;
     border-radius: 5px; 
@@ -64,8 +64,6 @@ p{
     color: #fff;
     visibility: hidden;
 }
-
-
 
 button{
 	width: 25%;

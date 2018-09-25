@@ -1,128 +1,102 @@
-var playerScore = 0;
+var playerPoints = 0;
 var playerLives = 3;
 
-let gameOver = () => {
+let startAdventure = () => { 
+    rootDiv1.classList.add("hide");
+    playerPoints = 0;
+}
+let replay = () => {
+    window.location.reload(true);
+}
 
+let gameOver = () => {
+    rootDiv2.classList.add("show");
 }
 
 let lifeLine = () => {
     if(availableLives.length === 0) {
-        gameOver()
+        gameOver();
     }
 }
 
 let victory = () => {
-
+    rootDiv3.classList.add("show");
 }
 
-
-// Enemies our player must avoid
-var Enemy = function(x, y, speed) {
+// Enemies class 
+var Enemy = function(x, y, speed = 1) {
     // Variables applied to each of our instances go here,
-    // we've provided one for you to get started
     this.x = x;
     this.y = y;
+    this.location = ( x, y);
     this.speed = speed;
 
-    // The image/sprite for our enemies, this uses
-    // a helper we've provided to easily load images
+    // The image/sprite for our enemies, this uses a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
 };
 
-// Update the enemy's position, required method for game
-// Parameter: dt, a time delta between ticks
-Enemy.prototype.update = function (dt) {
+// To Update the enemy's position, required method for game-Parameter: dt, a time delta between ticks
+Enemy.prototype.update = function(dt) {
     // You should multiply any movement by the dt parameter
-    // which will ensure the game runs at the same speed for
-    // all computers.
-    this.x += this.speed * dt;
-    // enemies reappears randomly once off the canvas
-    if (this.x > 510) {
-        this.x = -50;
-        this.speed = 100 + Math.floor(Math.random() * 222);
-    }
-    // checks for collisions between the player and the enemies
-    if (player.x < this.x + 80 && 
-        player.x + 80 > this.x && 
-        player.y < this.y + 60 && 
-        60 + player.y > this.y) {
-
+    this.x += 100 * this.speed * dt;
+    
+    // collison detection
+    if (parseInt(this.x)+ 100 >= playerX && parseInt(this.x) <= playerX + 40 && this.y === playerY){
+        console.log("a collision just occured your player diessss");  
         player.reset();
         availableLives.pop();
-        playerLives -= 1;
-
-        if (playerScore >= 50) {
-            playerScore -= 50;
+        playerLives -= 1
+        if (playerPoints >= 50){
+            playerPoints -= 50;
         }
-
-        player.x = 202;
-        player.y = 405;
     }
     lifeLine();
 };
 
 // Draw the enemy on the screen, required method for game
-Enemy.prototype.render = function () {
+Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
-// player class on both x and y axis
-var Player = function(x, y){
-    // move along x and y axis
+
+// player class
+var Player = function (x, y){
     this.x = x;
     this.y = y;
-    // image of the player
-    this.player = 'images/char-princess-girl.png';
+    this.sprite = 'images/char-princess-girl.png';
 };
-var playerX;
-var playerY;
+var playerX
+var playerY
 
-// This class requires an update(), render() and
-Player.prototype.update = function (dt) {
+Player.prototype.update = function(){
     playerX = this.x;
     playerY = this.y;
+}
 
+// this draws player on canvas
+Player.prototype.render = function(){
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+}
+
+// method to handleInput() 
+Player.prototype.handleInput = function(pressedKeys){
+    if (pressedKeys === 'left' && this.x > 33){
+        this.x -= 100;
+    }
+    else if (pressedKeys === 'up'&& this.y > 18){
+        this.y -= 80;
+    }
+    else if (pressedKeys === 'right' && this.x < 400){
+        this.x += 100
+    }
+    else if (pressedKeys === 'down' && this.y < 380){
+        this.y += 80
+    }
 };
-
-Player.prototype.render = function () {
-    ctx.drawImage(Resources.get(this.player), this.x, this.y);
-};
-// a handleInput() method.
-Player.prototype.handleInput = function (keyPress) {
-  
-    if (keyPress == 'left' && this.x > 0) {
-        this.x -= 102;
-    };
-
-    if (keyPress == 'right' && this.x < 405) {
-        this.x += 102;
-    };
-
-    if (keyPress == 'up' && this.y > 0) {
-        this.y -= 83;
-    };
-
-    if (keyPress == 'down' && this.y < 405) {
-        this.y += 83;
-    };
-  
-    if (this.y < 0) {
-        setTimeout(() => {
-            this.x = 202;
-            this.y = 405;
-        }, 600);
-
-    };
-};
-
-// Now instantiate your objects.
-// Place all enemy objects in an array called allEnemies
-// Place the player object in a variable called player
-
-// reset the player to original position on collision with the enemy
+// to reset player to original position
 Player.prototype.reset = function(){
-    this.x = 202;
-    this.y = 405;
+    this.x = 200;
+    this.y = 380;
 }
 
 // Lives class
@@ -162,41 +136,55 @@ Winblock.prototype.update = function(){
 
     if((-Math.abs(winblockY)) == playerY && this.x == playerX){
         allKeys.push(new Key(winblockX, winblockY));
-        playerScore += 100;
+        playerPoints += 100;
         player.reset();
     }
     if (allKeys.length == 5){
         console.log("You win Game");
-        youWin();
+        victory();
     } 
 }
 
 // class to give player points
-var Score = function(x, y, score){
+var Points = function(x, y, score){
     this.x = x;
     this.y = y;
-    this.score = "Your score: "+ playerScore
+    this.score = "Your points: "+ playerPoints
 }
-Score.prototype.render = function(){
+Points.prototype.render = function(){
     ctx.font = '20px serif';
     ctx.fillText(this.score, this.x, this.y);
 }
-Score.prototype.update = function(){
-    this.score = "Your scores: "+ playerScore
+Points.prototype.update = function(){
+    this.score = "Your points: "+ playerPoints
 }
 
+// possible X-axis positions on board
+var columns = [ -5, -100, -200, -300, -400];
+var enemyX;
+
+// possible Y-axis positions on board
+var rows = [ 60, 140, 220];
+var enemyY;
+
+var enemySpeed;
+
+// this is to randomly pick locations for bugs
+setInterval(function instances(){
+    enemyX = columns[Math.floor(Math.random() * 5)],
+    enemyY = rows[Math.floor(Math.random() * 3)],
+    enemySpeed = Math.floor(Math.random() * 15),
+    allEnemies.push(new Enemy(enemyX, enemyY, enemySpeed)); 
+},500)
 
 
 
-var allEnemies = [];
-var enemyLocation = [63, 147, 230];
+// Now instantiate your objects.
+// allEnemies- array of all enemy objects 
+var allEnemies = [ new Enemy(-8, 60, 3), new Enemy(0, 140, 10), new Enemy(-5, 300, 15)];
 
-enemyLocation.forEach( function(locationY) {
-    enemy = new Enemy(0, locationY, 200);
-    allEnemies.push(enemy);
-});
-
-var player = new Player(202, 405);
+// Place the player object in a variable called player
+var player = new Player( 200, 380);
 
 // instantiate lives
 var availableLives = [ new Lives(10, 540), new Lives(40, 540), new Lives(70, 540)];
@@ -206,8 +194,8 @@ var allKeys = [ ];
 // instantiate winning blocks
 var winningblocks = [ new Winblock(0, 20), new Winblock(100, 20), new Winblock(200, 20), new Winblock(300, 20), new Winblock(400, 20)];
 
-var score = new Score(350, 570)
-
+var points = new Points(350, 570)
+ 
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
@@ -224,12 +212,12 @@ document.addEventListener('keyup', function(e) {
 
 
 // access the div with an #root
-const rootDiv = document.querySelector('#root');
+const rootDiv1 = document.querySelector('#root');
 //  Adventure Description modal
 // create a new div .startGame
 const container = document.createElement('div');
 container.setAttribute('class', 'startGame');
-rootDiv.appendChild(container);
+rootDiv1.appendChild(container);
 
 const h2 = document.createElement('h2');
 h2.textContent = 'How To Play Classic Arcade Game';
@@ -238,6 +226,7 @@ p.textContent = `Use Left, Right, Up and Down arrowkeys to move the player left,
 The challenge is to try to get to the water at the top of the road as much as possible and win the game`;
 
 const button = document.createElement('button');
+// set id for 
 button.setAttribute('id', 'buttonId');
 button.textContent = `Start Adventure`;
 
@@ -246,11 +235,6 @@ container.appendChild(p);
 container.appendChild(button);
 
 const buttonClick1 = document.querySelector('#buttonId');
-// function to begin adventure
-const startAdventure = () => {
-    rootDiv.classList.add("hide");
-    playerScore = 0;
-}
 // event listener
 buttonClick1.addEventListener('click', startAdventure);
 
@@ -266,7 +250,7 @@ const h3 = document.createElement('h3');
 h3.textContent = 'End of game';
 const h4 = document.createElement('h4');
 h4.textContent = `You lost the game, Play another game`;
-buttonGameOver = document.createElement('button');
+const buttonGameOver = document.createElement('button');
 buttonGameOver.setAttribute('id', 'gameId');
 buttonGameOver.textContent = `Replay`;
 
@@ -274,12 +258,9 @@ gameOverContainer.appendChild(h3);
 gameOverContainer.appendChild(h4);
 gameOverContainer.appendChild(buttonGameOver);
 
+// access the button
 const buttonClick2 = document.querySelector('#gameId');
-
-const replay = () => {
-    window.location.reload(true);
-}
-
+// event listener
 buttonClick2.addEventListener('click', replay);
 
 
@@ -294,17 +275,14 @@ const h5 = document.createElement('h5');
 h5.textContent = 'Awesome';
 const h6 = document.createElement('h6');
 h6.textContent = `You are a Spartan`;
-buttonGameWon = document.createElement('button');
-buttonGameWon.setAttribute('id', 'gameId');
+const buttonGameWon = document.createElement('button');
+buttonGameWon.setAttribute('id', 'gameWonId');
 buttonGameWon.textContent = `Replay`;
 
 gameWonContainer.appendChild(h5);
 gameWonContainer.appendChild(h6);
 gameWonContainer.appendChild(buttonGameWon);
 
-const buttonClick3 = document.querySelector('#gameId');
+const buttonClick3 = document.querySelector('#gameWonId');
 
 buttonClick3.addEventListener('click', replay);
-
-
-
