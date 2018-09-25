@@ -1,6 +1,41 @@
-frontend-nanodegree-arcade-game
-===============================
 
-Students should use this [rubric](https://review.udacity.com/#!/projects/2696458597/rubric) for self-checking their submission. Make sure the functions you write are **object-oriented** - either class functions (like Player and Enemy) or class prototype functions such as Enemy.prototype.checkCollisions, and that the keyword 'this' is used appropriately within your class and class prototype functions to refer to the object the function is called upon. Also be sure that the **readme.md** file is updated with your instructions on both how to 1. Run and 2. Play your arcade game.
+# Frontend-Nanodegree-Arcade-Game-Clone
 
-For detailed instructions on how to get started, check out this [guide](https://docs.google.com/document/d/1v01aScPjSWCCWQLIpFqvg3-vXLH2e8_SZQKC8jNO0Dc/pub?embedded=true).
+## Table of Contents
+* Description of the Arcade-Game
+* Dependencies
+* Installation
+* How Play the Arcade-Game
+
+## Description of the Arcade-Game
+The Arcade Game consist of a Player and Enemies (Bugs).The goal of the player is to reach the water,without colliding into any one of the enemies. The player can move left, right, up and down with the aid of the arrow key. The enemies move in varying speeds on the paved block portion of the scene. Once a the player collides with an enemy, the game is reset and the player moves back to the start square. Once the player reaches the water the game is won.
+
+[Project link](https://marusoft.github.io/fend-arcade-game-clone/)
+
+
+## Dependencies
+The following are the dependencies that was used during the development of the *Memory Game Project* :
+* HTML/CSS
+* Vanilla JavaScript with DOM manipulation
+* Google Fonts
+* MDN Documentation
+* Images from [pexels](https://www.pexels.com/free-photos-vectors/celebration)
+
+## Installation
+
+```
+$ git clone https://marusoft.github.io/fend-arcade-game-clone.git
+
+```
+
+```
+$ cd fend-arcade-game-clone
+
+```
+
+## How to Run/Play the arcade game
+
+Load the [game](https://marusoft.github.io/fend-arcade-game-clone/) in your browser
+
+## Instructions
+* Use Left, Right, Up and Down arrowkeys to move the player left,right,up and down postion,avoiding player collision with the bugs crossing the road. The challenge is to try to get to the water at the top of the road as much as possible and win the game
