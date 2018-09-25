@@ -14,7 +14,7 @@ The Arcade Game consist of a Player and Enemies (Bugs).The goal of the player is
 
 
 ## Dependencies
-The following are the dependencies that was used during the development of the *Memory Game Project* :
+The following are the dependencies that was used during the development of the * Arcade Game Clone* :
 * HTML/CSS
 * Vanilla JavaScript with DOM manipulation
 * Google Fonts
@@ -38,4 +38,4 @@ $ cd fend-arcade-game-clone
 Load the [game](https://marusoft.github.io/fend-arcade-game-clone/) in your browser
 
 ## Instructions
-* Use Left, Right, Up and Down arrowkeys to move the player left,right,up and down postion,avoiding player collision with the bugs crossing the road. The challenge is to try to get to the water at the top of the road as much as possible and win the game
+* Use Left, Right, Up and Down arrowkeys to move the player left,right,up and down postion,avoiding player collision with the bugs crossing the road. The challenge is to try to get to the water at the top of the road as much as possible and win the game.
